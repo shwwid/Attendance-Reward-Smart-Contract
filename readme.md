@@ -19,10 +19,55 @@ Below is the high-level flowchart of the contract's operation:
    - Use `getStudent(address _studentAddress)` to retrieve attendance count and reward balance.
 
 ```
-[Student] ---> (checkIn) ---> [Contract] ---> (update data) ---> [Event Emission]
-      \                                /    
-       \                              /
-        \---> (getStudent) <----------/
+          +-------------------+
+          |  Contract Deployed |
+          +-------------------+
+                   |
+                   |
+         +-------------------+
+         |    checkIn()      |
+         +-------------------+
+                   |
+   +---------------+---------------+
+   |                               |
+   |   +--------------------+      |
+   |   | Increment Attendance |    |
+   |   +--------------------+      |
+   |              |                |
+   |              v                |
+   |   +--------------------+      |
+   |   | Increase Reward    |      |
+   |   +--------------------+      |
+   |              |                |
+   |              v                |
+   |   +--------------------+      |
+   |   | Emit CheckIn Event|      |
+   |   +--------------------+      |
+   |                               |
+   +-------------------------------+
+                   |
+                   |
+           +---------------------+
+           |   getStudent()      |
+           +---------------------+
+                   |
+                   |
+   +---------------+---------------+
+   |                               |
+   |   +---------------------+     |
+   |   | Retrieve Student    |     |
+   |   | Details from Mapping|     |
+   |   +---------------------+     |
+   |                               |
+   +-------------------------------+
+                   |
+                   |
+         +-----------------------+
+         | Output: Details       |
+         | (attendanceCount,     |
+         | rewardBalance)        |
+         +-----------------------+
+
 ```
 
 ## Contract Address
